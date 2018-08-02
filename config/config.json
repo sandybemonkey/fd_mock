@@ -1,3 +1,4 @@
 {
-  "checkTokenURL": "https://fcp.dev.dev-franceconnect.fr/api/v1/checktoken"
+  "fcHost": "https://fcp.integ01.dev-franceconnect.fr",
+  "checkTokenPath": "/api/v1/checktoken"
 }

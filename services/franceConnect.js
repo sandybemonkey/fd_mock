@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../config/config';
+import { fcHost, checkTokenPath } from '../config/config';
 
 
 const checkAccessToken = async (req, res, next) => {
@@ -14,15 +14,17 @@ const checkAccessToken = async (req, res, next) => {
 
   const accessToken = authorizationHeaderParts[1];
 
-  let user;
-
   try {
-    user = await axios({
+    const { data: user } = await axios({
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       data: { token: accessToken },
-      url: config.checkTokenURL,
+      url: `${fcHost}${checkTokenPath}`,
     });
+
+    req.user = user;
+
+    return next();
   } catch (error) {
     if (!error.response) {
       return res.sendStatus(502);
@@ -34,10 +36,6 @@ const checkAccessToken = async (req, res, next) => {
 
     return next(error);
   }
-
-  req.user = user;
-
-  return next();
 };
 
 export default checkAccessToken;
