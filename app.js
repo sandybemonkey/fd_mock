@@ -3,6 +3,11 @@ import logger from 'morgan';
 
 import indexRouter from './routes/index';
 import checkAccessToken from './services/franceConnect';
+import { mock } from './mock/france-connect';
+
+if (process.env.LOCAL_LOOP === 'true') {
+  mock();
+}
 
 const app = express();
 const port = process.env.PORT || '4000';
