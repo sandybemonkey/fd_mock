@@ -3,7 +3,7 @@ import getQuotientFamilial from '../services/quotientFamilial';
 
 const router = express.Router();
 
-router.get('/quotientfamilial', async function(req, res, next) {
+router.get('/quotientfamilial', async (req, res) => {
   const quotientFamilial = await getQuotientFamilial();
 
   return res.send(quotientFamilial);
