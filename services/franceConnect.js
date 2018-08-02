@@ -1,12 +1,19 @@
 import axios from 'axios';
 import config from '../config/config';
 
+
+
 const checkAccessToken = async (req, res, next) => {
-    // TODO make this test  https://github.com/tkellen/js-express-bearer-token/blob/master/index.js#L23
-    const accessToken = req.header('Authorization') && req.header('Authorization').split(' ')[1];
-    if (!accessToken) {
+    if (!req.header('Authorization')) {
         return res.sendStatus(400);
     }
+
+    const authorizationHeaderParts = req.header('Authorization').split(' ');
+    if (authorizationHeaderParts.length !== 2 || authorizationHeaderParts[0] !== 'Bearer') {
+        return res.sendStatus(400);
+    }
+
+    const accessToken = authorizationHeaderParts[1];
 
     let user;
 
@@ -18,10 +25,18 @@ const checkAccessToken = async (req, res, next) => {
             url: config.checkTokenURL,
         })
     } catch (error) {
-        throw error;
+        if (!error.response) {
+            return res.sendStatus(502)
+        }
+
+        if (error.response && error.response.status >= 400) {
+            return res.status(error.response.status).send(error.response.data)
+        }
+
+        return next(error);
     }
 
-    res.user = user;
+    req.user = user;
 
     return next();
 }
