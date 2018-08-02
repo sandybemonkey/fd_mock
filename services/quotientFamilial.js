@@ -1,5 +1,3 @@
-const getQuotientFamilial = async (accessToken) => {
-    return true;
-}
+const getQuotientFamilial = async () => true;
 
 export default getQuotientFamilial;
