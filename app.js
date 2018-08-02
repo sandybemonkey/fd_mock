@@ -73,4 +73,4 @@ function onListening() {
     debug('Listening on ' + bind);
 }
 
-export default app;
+export default server;
