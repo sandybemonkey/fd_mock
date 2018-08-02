@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha --require babel-polyfill --require babel-register **/*test.js",
+    "test": "NODE_ENV=test mocha --require babel-polyfill --require babel-register **/*test.js",
     "lint": "eslint ."
   },
   "dependencies": {
