@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from '../config/config';
 
 const checkAccessToken = async (req, res, next) => {
+    // TODO make this test  https://github.com/tkellen/js-express-bearer-token/blob/master/index.js#L23
     const accessToken = req.header('Authorization') && req.header('Authorization').split(' ')[1];
     if (!accessToken) {
         return res.sendStatus(400);
@@ -17,14 +18,10 @@ const checkAccessToken = async (req, res, next) => {
             url: config.checkTokenURL,
         })
     } catch (error) {
-        if (error.response.status ) {
-
-        }
         throw error;
-
     }
 
-    console.log(user, 'user');
+    res.user = user;
 
     return next();
 }
