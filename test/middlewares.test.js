@@ -2,8 +2,8 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import nock from 'nock';
-import app from '../app';
-import { fcHost, checkTokenPath } from '../config/config';
+import app from '../src/app';
+import { fcHost, checkTokenPath } from '../config';
 import {
   validToken, malformedToken, expiredToken, mock,
 } from '../mock/france-connect';
