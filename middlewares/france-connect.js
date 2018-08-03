@@ -22,7 +22,7 @@ const checkAccessToken = async (req, res, next) => {
       url: `${fcHost}${checkTokenPath}`,
     });
 
-    req.user = user;
+    req.user = user; // TODO rename this as this object is: a user + an identity + a client + FI
 
     return next();
   } catch (error) {
