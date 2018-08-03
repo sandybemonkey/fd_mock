@@ -1,8 +1,8 @@
-# data-providers-examples
+# data-providers-examples
 
 An example of Data Provider for FranceConnect.
 
-## Install
+## Install
 
 Run the following commands:
 
