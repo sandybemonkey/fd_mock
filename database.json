@@ -1,0 +1,34 @@
+{
+  "svair": [
+    {
+      "declarant1": {
+        "nom": "Mercier",
+        "nomNaissance": "Mercier",
+        "prenoms": "Jean",
+        "dateNaissance": "10/12/1980"
+      },
+      "declarant2": {
+        "nom": "Mercier",
+        "nomNaissance": "Baude",
+        "prenoms": "Eric",
+        "dateNaissance": "10/12/1981"
+      },
+      "dateRecouvrement": "08/07/2015",
+      "dateEtablissement": "10/10/2015",
+      "nombreParts": 2.5,
+      "situationFamille": "Marié(e)s",
+      "nombrePersonnesCharge": 1,
+      "revenuBrutGlobal": 32698,
+      "revenuImposable": 32698,
+      "impotRevenuNetAvantCorrections": 2230,
+      "montantImpot": 2230,
+      "revenuFiscalReference": 32698,
+      "foyerFiscal": {
+        "annee": 2015,
+        "adresse": "12 QUAI JOSEPH GILLET 69004 LYON"
+      },
+      "anneeImpots": "2016",
+      "anneeRevenus": "2015"
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 import express from 'express';
 import logger from 'morgan';
 
-import checkAccessToken from './middlewares/france-connect';
-import { mock } from './mock/france-connect';
-import getRevenuFiscalDeReference from './controllers/revenu-fiscal-de-reference';
+import checkAccessToken from './middlewares';
+import { mock } from '../mock/france-connect';
+import getRevenuFiscalDeReference from './controllers';
 
 if (process.env.LOCAL_LOOP === 'true') {
   mock();
@@ -20,11 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/', checkAccessToken);
 
-app.get('/revenu-fiscal-de-reference', async (req, res) => {
-  const revenuFiscalDeReference = await getRevenuFiscalDeReference(req.user);
-
-  return res.send(revenuFiscalDeReference);
-});
+app.get('/revenu-fiscal-de-reference', getRevenuFiscalDeReference);
 
 app.set('port', port);
 
