@@ -2,28 +2,43 @@ import express from 'express';
 import logger from 'morgan';
 
 import checkAccessToken from './middlewares';
-import { mock } from '../mock/france-connect';
-import getRevenuFiscalDeReference from './controllers';
+import { initializeMock } from '../mock/france-connect';
+import getDgfipData from './controllers';
+import { fcHost } from '../config';
 
-if (process.env.LOCAL_LOOP === 'true') {
-  mock();
+if (process.env.LOCAL_LOOP !== 'false') {
+  initializeMock();
+} else {
+  console.log('\x1b[31m%s\x1b[0m', `Remote loop mode activated: this server will hit ${fcHost}`); // eslint-disable-line no-console
 }
 
 const app = express();
-const port = process.env.PORT || '4000';
 
+// Setup express middlewares (see https://expressjs.com/en/guide/writing-middleware.html)
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
 }
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
 app.use('/', checkAccessToken);
 
-app.get('/revenu-fiscal-de-reference', getRevenuFiscalDeReference);
+// Setup routing (see https://expressjs.com/en/guide/routing.html)
+app.get('/revenu-fiscal-de-reference', getDgfipData);
 
-app.set('port', port);
+// Starting server
+const port = process.env.PORT || '4000';
+const server = app.listen(port, () => {
+  // eslint-disable-next-line no-console
+  console.log(`
+\x1b[32mServer listening on http://localhost:${port}\x1b[0m
 
-const server = app.listen(port);
+
+You can test it with curl:
+
+  curl -X GET \\
+  http://localhost:4000/revenu-fiscal-de-reference \\
+  -H 'authorization: Bearer 9af033eb295d0fe113988d29a26527f920114973b3a1ca7bdb44768fd0c73937'
+  `);
+});
 
 export default server;
