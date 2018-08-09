@@ -2,8 +2,6 @@
 
 An example of Data Provider for FranceConnect.
 
-The way a data provider works is explained in [FranceConnect documentation](https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-donnees).
-
 ## Install
 
 Run the following commands:
@@ -20,11 +18,11 @@ You can then start the server with:
 npm start
 ```
 
-Note that when calling the application this will call an internal mock of FranceConnect integration server.
-To hit the actual fcp.integ01.dev-franceconnect.fr remote server, run the server with:
+Note that when calling the application this will initiate call to the fcp.integ01.dev-franceconnect.fr remote server.
+You can use a local mocked franceconnect server instead by running:
 
 ```bash
-LOCAL_LOOP=false npm start
+LOCAL_LOOP=true npm start
 ```
 
 ## Run the tests
