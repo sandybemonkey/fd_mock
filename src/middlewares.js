@@ -1,18 +1,12 @@
 import axios from 'axios';
 import { fcHost, checkTokenPath } from '../config';
-
+import { getAuthorizationToken } from './utils';
 
 const checkAccessToken = async (req, res, next) => {
-  if (!req.header('Authorization')) {
+  const accessToken = getAuthorizationToken(req);
+  if (!accessToken) {
     return res.sendStatus(400);
   }
-
-  const authorizationHeaderParts = req.header('Authorization').split(' ');
-  if (authorizationHeaderParts.length !== 2 || authorizationHeaderParts[0] !== 'Bearer') {
-    return res.sendStatus(400);
-  }
-
-  const accessToken = authorizationHeaderParts[1];
 
   try {
     const { data: fcToken } = await axios({
@@ -26,6 +20,7 @@ const checkAccessToken = async (req, res, next) => {
 
     return next();
   } catch (error) {
+    // the server may be down or did not respond
     if (!error.response) {
       return res.sendStatus(502);
     }

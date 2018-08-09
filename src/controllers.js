@@ -1,26 +1,30 @@
-import { filter, reconcile } from './services';
+import { intersection, isEmpty } from 'lodash';
+import { authorizedScope, filter, reconcile} from './services';
 
-const authorizedScope = 'dgfip_revenu_fiscal_de_reference';
-
-const getRevenuFiscalDeReference = (req, res) => {
-  if (!req.fcToken || !req.fcToken.identity
-    || !req.fcToken.identity.given_name || !req.fcToken.identity.family_name) {
-    return res.sendStatus(404);
-  }
-
-  if (!req.fcToken.scope || !req.fcToken.scope.includes(authorizedScope)) {
+/**
+ * TODO add documentation here
+ * 1. we ensure the called scope is the right one
+ * 2.
+ *
+ * @param req
+ * @param res
+ * @returns {*}
+ */
+const getDgfipData = async (req, res) => {
+  // TODO The FS has tried to call this FD but
+  if (isEmpty(intersection(req.fcToken.scope, authorizedScope))) {
     return res.sendStatus(403);
   }
 
-  const matchedDatabaseEntry = reconcile(req.fcToken.identity);
+  const matchedDatabaseEntry = await reconcile(req.fcToken.identity);
 
-  if (!matchedDatabaseEntry) {
+  if (isEmpty(matchedDatabaseEntry)) {
     return res.sendStatus(404);
   }
 
-  const revenuFiscalDeReference = filter(matchedDatabaseEntry);
+  const revenuFiscalDeReference = filter(intersection(req.fcToken.scope, authorizedScope), matchedDatabaseEntry);
 
   return res.json(revenuFiscalDeReference);
 };
 
-export default getRevenuFiscalDeReference;
+export default getDgfipData;
