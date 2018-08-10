@@ -50,7 +50,7 @@ export const reconcile = (userFromFranceConnect) => {
     return null;
   }
 
-  return database.connection.get({
+  return database.connection.find({
     /*
      * In this example, we have a database where names have no accents and are capitalized.
      * We have to remove accent from names and capitalised them.
