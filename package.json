@@ -20,8 +20,6 @@
     "node-csv-query": "^0.1.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-plugin-rewire": "^1.1.0",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "eslint": "^4.19.1",
