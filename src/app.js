@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', checkAccessToken);
 
 // Setup routing (see https://expressjs.com/en/guide/routing.html)
-app.get('/revenu-fiscal-de-reference', getDgfipData);
+app.get('/dgfip', getDgfipData);
 
 // Starting server
 const port = process.env.PORT || '4000';
@@ -36,7 +36,7 @@ const server = app.listen(port, () => {
 You can test it with curl:
 
   curl -X GET \\
-  http://localhost:4000/revenu-fiscal-de-reference \\
+  http://localhost:4000/dgfip \\
   -H 'authorization: Bearer 9af033eb295d0fe113988d29a26527f920114973b3a1ca7bdb44768fd0c73937'
   `);
 });

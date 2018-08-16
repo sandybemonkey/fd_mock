@@ -17,7 +17,23 @@ export const cleanUpAccentedChars = str => str
   .replace(/[ÀÁÂÃÄÅ]/g, 'A')
   .replace(/[àáâãäå]/g, 'a')
   .replace(/[ÈÉÊË]/g, 'E')
-  .replace(/ç/g, 'c') // this function is incomplete but stand as an example
+  .replace(/[èéêë]/g, 'e')
+  .replace(/[Æ]/g, 'AE')
+  .replace(/[æ]/g, 'ae')
+  .replace(/[Ç]/g, 'C')
+  .replace(/[ç]/g, 'c')
+  .replace(/[ÌÍÎÏ]/g, 'I')
+  .replace(/[ìíîï]/g, 'i')
+  .replace(/[Ñ]/g, 'N')
+  .replace(/[ñ]/g, 'n')
+  .replace(/[ÒÓÔÕÖØ]/g, 'O')
+  .replace(/[òóôõöø]/g, 'o')
+  .replace(/[Œ]/g, 'OE')
+  .replace(/[œ]/g, 'oe')
+  .replace(/[ÙÚÛÜ]/g, 'U')
+  .replace(/[ùúûü]/g, 'u')
+  .replace(/[ÝŸ]/g, 'Y')
+  .replace(/[ýÿ]/g, 'y') // this function is incomplete but stand as an example
   .replace(/[^a-z0-9]/gi, ''); // final clean up
 
 

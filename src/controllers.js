@@ -1,28 +1,27 @@
-import { intersection, isEmpty } from 'lodash';
-import { authorizedScope, filter, reconcile} from './services';
+import { isEmpty } from 'lodash';
+import { isAuthorized, filter, reconcile } from './services';
 
-/**
- * TODO add documentation here
- * 1. we ensure the called scope is the right one
- * 2.
- *
- * @param req
- * @param res
- * @returns {*}
- */
 const getDgfipData = async (req, res) => {
-  // TODO The FS has tried to call this FD but
-  if (isEmpty(intersection(req.fcToken.scope, authorizedScope))) {
+  // First step: we make sure the user is authorized to read data from DGFIP
+  if (!isAuthorized(req.fcToken)) {
+    // In this case, the Fournisseur de Service as call the Fournisseur de Données with a user that
+    // does not have enough scopes to access any data
     return res.sendStatus(403);
   }
 
+  // Second step: we get the data that match the France Connect user
   const matchedDatabaseEntry = await reconcile(req.fcToken.identity);
 
   if (isEmpty(matchedDatabaseEntry)) {
+    // In this case, our database did not find any matching data
     return res.sendStatus(404);
   }
 
-  const revenuFiscalDeReference = filter(intersection(req.fcToken.scope, authorizedScope), matchedDatabaseEntry);
+  // Third step: we filter the data so it returns only the data allowed for the given scope
+  const revenuFiscalDeReference = filter(
+    req.fcToken.scope,
+    matchedDatabaseEntry,
+  );
 
   return res.json(revenuFiscalDeReference);
 };
